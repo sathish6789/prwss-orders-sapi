@@ -1,0 +1,12 @@
+#%RAML 1.0 Library
+usage: Common traits and types for various APIs.
+
+securitySchemes:
+ client-id-required: !include schemes/client-id-security-scheme.raml
+
+types:
+  error-datatype: !include types/error-response-type.raml
+
+traits:
+  transaction-id : !include traits/transaction-id.raml
+  source-system: !include traits/source-system.raml

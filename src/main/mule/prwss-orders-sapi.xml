@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
+    <flow name="prwss-orders-sapi-main">
+        <http:listener config-ref="http-listener-config" path="/api/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <ee:transform doc:name="set the correlationId" doc:id="730c75b1-2314-4927-84bf-8dcc40bb6861">
+            <ee:message />
+            <ee:variables>
+                <ee:set-variable variableName="correlationId"><![CDATA[attributes.headers.correlationId default uuid()]]></ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <apikit:router config-ref="prwss-orders-sapi-config" />
+    </flow>
+    <flow name="prwss-orders-sapi-console">
+        <http:listener config-ref="http-listener-config" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="prwss-orders-sapi-config" />
+    </flow>
+    <flow name="get:\coiInfo:prwss-orders-sapi-config">
+        <ee:transform doc:name="logger inputPayload">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+            </ee:message>
+            <ee:variables>
+                <ee:set-variable variableName="inputPayload"><![CDATA[%dw 2.0
+output application/json
+---
+{
+    correlationId : vars.correlationId,
+    businessProcessName: flow.name,
+    flowName: flow.name,  
+    source: Mule::p('application.name'),
+    target: Mule::p('application.target'),
+    httpMethod: attributes.method,
+    message: "Received the request from the prwss-orders-papi",
+    businessObject: payload
+}]]></ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <flow-ref doc:name="mile-log:payload-logger" doc:id="4c4e5323-62e8-4bd5-8d8f-b0fba8cec883" name="mile-log:payload-logger" />
+        <flow-ref doc:name="calling subflow orderInfo" doc:id="75e589c9-d075-4477-85ac-4cdfaac9c09a" name="orderInfo" />
+    </flow>
+    <flow name="post:\coiUploading:application\json:prwss-orders-sapi-config">
+        <ee:transform doc:name="logger inputPayload">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+            </ee:message>
+            <ee:variables>
+                <ee:set-variable variableName="inputPayload"><![CDATA[%dw 2.0
+output application/json
+---
+{
+    correlationId : vars.correlationId,
+    businessProcessName: flow.name,
+    flowName: flow.name,  
+    source: Mule::p('application.name'),
+    target: Mule::p('application.target'),
+    httpMethod: attributes.method,
+    message: "Received the request from the prwss-orders-papi",
+    businessObject: payload
+}]]></ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <flow-ref doc:name="mile-log:payload-logger" doc:id="f539ae68-e049-47de-9d67-b5841a5b9c13" name="mile-log:payload-logger" />
+        <flow-ref doc:name="calling subflow postCustomerDetails" doc:id="b07448e2-d3dc-4ddd-a381-ebb6543f284e" name="postCustomerDetails" />
+    </flow>
+    <flow name="post:\itemsuploading:application\json:prwss-orders-sapi-config">
+        <ee:transform doc:name="logger inputPayload">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+            </ee:message>
+            <ee:variables>
+                <ee:set-variable variableName="inputPayload"><![CDATA[%dw 2.0
+output application/json
+---
+{
+    correlationId : vars.correlationId,
+    businessProcessName: flow.name,
+    flowName: flow.name,  
+    source: Mule::p('application.name'),
+    target: Mule::p('application.target'),
+    httpMethod: attributes.method,
+    message: "Received the request from the prwss-orders-papi",
+    businessObject: payload
+}]]></ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <flow-ref doc:name="mile-log:payload-logger" doc:id="01b007d5-9d94-44f6-94f9-69527b1d493e" name="mile-log:payload-logger" />
+        <flow-ref doc:name="calling subflow itemsInsert" doc:id="c09a93e0-218a-4630-8438-44025cd820b1" name="itemsInsert" />
+    </flow>
+    <flow name="get:\health:prwss-orders-sapi-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  apiName: "prwss-orders-sapi",
+  status: "up"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+</mule>

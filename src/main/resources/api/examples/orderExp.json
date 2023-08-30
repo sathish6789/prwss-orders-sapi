@@ -1,0 +1,31 @@
+{
+    "CID": 6,
+    "orderDetails": [
+        {
+            "itemId": "AB11100",
+            "itemName": "water",
+            "lineItemStatus": "A",
+            "quantity": 10,
+            "paymentMethod": "online",
+            "unitPrice": 10,
+            "Street": "kphp",
+            "City": "kphp",
+            "State": "TS",
+            "ZipCode": 500072,
+            "Country": "IN"
+        },
+        {
+            "itemId": "AB1010011",
+            "itemName": "oneplus",
+            "lineItemStatus": "A",
+            "quantity": 1,
+            "paymentMethod": "online",
+            "unitPrice": 10000,
+            "Street": "kphp",
+            "City": "kphp",
+            "State": "TS",
+            "ZipCode": 500072,
+            "Country": "IN"
+        }
+    ]
+}

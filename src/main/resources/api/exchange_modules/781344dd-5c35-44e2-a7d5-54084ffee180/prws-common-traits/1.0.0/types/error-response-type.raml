@@ -1,0 +1,40 @@
+#%RAML 1.0 DataType
+displayName: Error Response Format
+description: The common error response format used for all API Calls.
+type: object
+properties:
+  errorOrigin:
+    type: string
+    description: Name of the API
+    required: true
+    example: "orders API"
+  status:
+    type: string
+    description: Error status
+    required: true
+    example: "ERROR"
+  code:
+    type: string
+    description: The error type identifier
+    required: true
+    example: "BAD REQUEST"
+  message:
+    type: string
+    description: A description of the error 
+    required: true
+    example: "Missing required header - x-api-correlation-id"
+  description:
+    type: string
+    description: An optional attribute that could be of any type, usually an object or string that provides extra details around the exception cause.
+    required: true
+    example: "HTTP Header x-correlation-id was provided but failed to be transmitted downstream."
+  correlationId:
+    type: string
+    description: A unique UUID for the request.
+    required: true
+    example: "101-aaa-bbb-ccc-ddd-202"
+  timestamp:
+    type: string
+    description: A timestamp identifying the time of the error.
+    required: true
+    example: "2020-01-01T00:00:01"

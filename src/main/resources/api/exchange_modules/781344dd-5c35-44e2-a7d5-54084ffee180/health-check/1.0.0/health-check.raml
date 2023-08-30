@@ -1,0 +1,42 @@
+#%RAML 1.0 ResourceType
+get:
+  description: Executes a health check of the API with optional checks of the underlying systems.
+  displayName: Assess the health of the application API
+  queryParameters:
+    checkEndSystemConnectivity?:
+      type: boolean
+      description: This option determines whether backend system connectivity needs to be verified as part the healthcheck operation.
+      displayName: Check End System Connectivity
+      example: true
+  responses: 
+    200:
+      body:
+        application/json: 
+          type: !include hcDataTypes/hcModel.raml
+          examples: !include hcExamples/healthCheckExample.raml
+            
+    400:
+      description: There was an issue with the request.
+      body:
+        application/json:
+          type: !include hcDataTypes/hcError.raml
+    401:
+      description: There are issues accessing the system.
+      body:
+        application/json:
+          type: !include hcDataTypes/hcError.raml
+    404:
+      description: The API or endpoint hasn't been implemented.
+      body:
+        application/json:
+          type: !include hcDataTypes/hcError.raml
+    408:
+      description: The healthcheck has timed out.
+      body:
+        application/json:
+          type: !include hcDataTypes/hcError.raml
+    500:
+      description: An system error has occurred.
+      body:
+        application/json:
+          type: !include hcDataTypes/hcError.raml

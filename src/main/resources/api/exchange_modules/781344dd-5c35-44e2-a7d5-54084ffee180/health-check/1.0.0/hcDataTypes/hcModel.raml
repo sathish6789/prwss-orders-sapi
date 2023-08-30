@@ -1,0 +1,15 @@
+#%RAML 1.0 DataType
+
+properties:
+  apiName:
+    description: The name of the API itself
+    type: string
+  status: 
+    description: Denotes the status of the API
+    enum: ["up", "down"]
+  dependencies?:
+    description: The status of all the dependencies
+    type: array
+    items:
+      type: !include hcDependency.raml
+    

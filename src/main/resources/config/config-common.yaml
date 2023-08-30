@@ -1,0 +1,6 @@
+# Common File to be use in All env
+application:
+  name: "prwss-orders-sapi"
+  target: "prwss-orders-sapi"
+milestone:
+  category: "LOG"

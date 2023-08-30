@@ -1,0 +1,12 @@
+#%RAML 1.0 Trait
+displayName: Transaction Id
+
+description: This is correlation id which is unique id to specific transaction that will be applied to an API to allow tracking of requests through downstream systems
+
+headers:
+  correlationId:
+    displayName: Correlation Id
+    description: A unique id to allow correlation of the requests across systems
+    type: string
+    required: true
+    example: "99875a50-9479-4ce4-88dc-b8e51843e1b8"

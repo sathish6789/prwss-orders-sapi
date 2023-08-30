@@ -1,0 +1,20 @@
+%dw 2.0
+
+type auto_13c0d089_acb9_4d61_9494_a0055ba7ddc9_Input_Variables_inputPayload = {|
+  correlationId: Null, 
+  businessProcessName: String | Null, 
+  flowName: String | Null, 
+  source: String, 
+  target: String, 
+  httpMethod: Null, 
+  message: String, 
+  businessObject: org_mule_extension_db_api_StatementResult
+|}
+type org_mule_extension_db_api_StatementResult = {|
+  affectedRows?: Number, 
+  generatedKeys?: { _?: Number }
+|} {"typeAlias": "StatementResult",
+"typeId": "org.mule.extension.db.api.StatementResult"}
+
+
+

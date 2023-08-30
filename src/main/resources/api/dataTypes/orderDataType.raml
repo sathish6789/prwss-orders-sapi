@@ -1,0 +1,40 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  CID:
+    type: integer
+  orderDetails:
+    type: array
+    items:
+      type: object
+      properties:
+        itemId:
+          type: string
+          required: true
+        itemName:
+          type: string
+          required: true
+        quantity:
+          type: number
+          required: true
+        paymentMethod:
+          type: string
+          required: true
+        unitPrice:
+          type: number
+          required: true
+        Street:
+          type: string
+          required: true
+        City:
+          type: string
+          required: true
+        State:
+          type: string
+          required: true
+        ZipCode:
+          type: number
+          required: true
+        Country:
+          type: string
+          required: true

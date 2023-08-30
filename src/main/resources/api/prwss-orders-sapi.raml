@@ -1,0 +1,71 @@
+#%RAML 1.0
+title: prwss-orders-sapi
+version: v1
+description: Getting the orders and customers details and storing the placed orders into the database
+protocols: [HTTP,HTTPS]
+
+resourceTypes:
+  healthCheck: !include exchange_modules/781344dd-5c35-44e2-a7d5-54084ffee180/health-check/1.0.0/health-check.raml
+securitySchemes:
+  security: !include exchange_modules/781344dd-5c35-44e2-a7d5-54084ffee180/prws-common-traits/1.0.0/schemes/client-id-security-scheme.raml
+traits:
+  response: !include traits/errorResponse.raml
+  correlation-id: !include exchange_modules/781344dd-5c35-44e2-a7d5-54084ffee180/prws-common-traits/1.0.0/traits/transaction-id.raml
+
+/health:
+  type: healthCheck
+
+/coiInfo:
+  displayName: getting orders information
+  description: fetching the orders and customers information
+  is:
+    - response
+    - correlation-id
+  securedBy: [security]
+  get:
+    queryParameters:
+      values:
+        type: number
+        required: true
+      query:
+        type: string
+        required: true
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              message: !include examples/succCustomerExp.json
+/coiUploading:
+  displayName: inserting the customers and orders information
+  description: inserting the customers, items and orders information into the mulepoc database
+  is:
+    - response
+    - correlation-id
+  securedBy: [security]
+  post:
+    body:
+      application/json:
+        example: !include examples/orderExp.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/succOrderExp.json
+/itemsuploading:
+  displayName: inserting the items data
+  description: Bulk inserting or updating the items details
+  is:
+    - response
+    - correlation-id
+  securedBy: [security]
+  post:
+    body:
+      application/json:
+        example: !include examples/orderExp.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/succOrderExp.json
+

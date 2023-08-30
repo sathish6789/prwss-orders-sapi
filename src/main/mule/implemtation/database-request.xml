@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<flow name="postCustomerDetails" doc:id="46dbb0d9-e17c-4e61-80a8-4e6e1f3c6b57" >
+		<ee:transform doc:name="json payload" doc:id="80b1ff06-1295-410a-96b2-47cba4026233" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<db:insert doc:name="inserting the customer/orders details" doc:id="bf5422b6-1aa9-417c-9648-e9953357b6d7" config-ref="Database_Config">
+			<db:sql ><![CDATA[#[payload.query]]]></db:sql>
+			<db:input-parameters ><![CDATA[#[payload.values]]]></db:input-parameters>
+		</db:insert>
+		<ee:transform doc:name="logger inputPayload" doc:id="4cb7faab-1a2c-4478-86d4-d80bc2833573" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="inputPayload" ><![CDATA[%dw 2.0
+output application/json
+---
+{
+    correlationId : vars.correlationId,
+    businessProcessName: flow.name,
+    flowName: flow.name,  
+    source: Mule::p('application.name'),
+    target: Mule::p('application.target'),
+    httpMethod: attributes.method,
+    message: "Received the success from the database",
+    businessObject: payload
+}
+]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="mile-log:success-response-received" doc:id="cdd3f0ce-2aa4-4d4e-a1cf-dc12d82a731e" name="mile-log:success-response-received"/>
+	</flow>
+	<flow name="orderInfo" doc:id="c0a4958b-ce11-4865-8230-10fcf7951c45" >
+		<ee:transform doc:name="json payload" doc:id="e8ac026f-ff35-45c7-aa20-f53dd361930d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<db:select doc:name="fetching the ordersId/customerId" doc:id="92eba1d7-541c-4e7f-aad5-3bdfe77d3c0c" config-ref="Database_Config">
+			<db:sql ><![CDATA[#[attributes.queryParams[0]]]]></db:sql>
+			<db:input-parameters ><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	filterId: attributes.queryParams[1]
+}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="logger inputPayload" doc:id="cf690ee1-6f9b-482a-99b2-a0c5a2559349" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="inputPayload" ><![CDATA[%dw 2.0
+output application/json
+---
+{
+    correlationId : vars.correlationId,
+    businessProcessName: flow.name,
+    flowName: flow.name,  
+    source: Mule::p('application.name'),
+    target: Mule::p('application.target'),
+    httpMethod: attributes.method,
+    message: "Received the success from the database",
+    businessObject: payload
+}
+]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="mile-log:success-response-received" doc:id="b44f7d03-a295-4754-92e4-eaab35827f6a" name="mile-log:success-response-received"/>
+	</flow>
+	<flow name="itemsInsert" doc:id="de764327-40ae-4591-be0e-0f2c4e21429b" >
+		<ee:transform doc:name="json payload" doc:id="f13ba5dc-6334-4813-b2d7-44b7d7a177ae" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="itemsquery" ><![CDATA[%dw 2.0
+output application/json
+---
+payload.query replace '\n' with " "]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<db:bulk-insert doc:name="inserting items details" doc:id="384eb2ee-81bb-43ce-a82d-0f9a850a127a" config-ref="Database_Config">
+			<db:bulk-input-parameters ><![CDATA[#[payload.payload]]]></db:bulk-input-parameters>
+			<db:sql ><![CDATA[#[payload.query]]]></db:sql>
+		</db:bulk-insert>
+		<ee:transform doc:name="logger inputPayload" doc:id="f2f9fdb1-f91b-4d85-9f27-4922fd7c43f7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="inputPayload" ><![CDATA[%dw 2.0
+output application/json
+---
+{
+    correlationId : vars.correlationId,
+    businessProcessName: flow.name,
+    flowName: flow.name,  
+    source: Mule::p('application.name'),
+    target: Mule::p('application.target'),
+    httpMethod: attributes.method,
+    message: "Received the success from the database",
+    businessObject: payload
+}
+]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="mile-log:success-response-received" doc:id="ea506944-020f-4c27-a8f6-4514cbbc32bb" name="mile-log:success-response-received"/>
+	</flow>
+</mule>
