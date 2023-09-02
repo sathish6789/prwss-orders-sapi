@@ -15,7 +15,7 @@ traits:
 /health:
   type: healthCheck
 
-/coiInfo:
+/coi-info:
   displayName: getting orders information
   description: fetching the orders and customers information
   is:
@@ -36,7 +36,7 @@ traits:
           application/json:
             example:
               message: !include examples/succCustomerExp.json
-/coiUploading:
+/coi-upload:
   displayName: inserting the customers and orders information
   description: inserting the customers, items and orders information into the mulepoc database
   is:
@@ -52,7 +52,7 @@ traits:
         body:
           application/json:
             example: !include examples/succOrderExp.json
-/itemsuploading:
+/items-upload:
   displayName: inserting the items data
   description: Bulk inserting or updating the items details
   is:

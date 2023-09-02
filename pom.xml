@@ -36,24 +36,24 @@
 				<extensions>true</extensions>
 				<configuration>
 					<cloudHubDeployment>
-						<objectStoreV2>true</objectStoreV2>
-						<muleVersion>${mule.version}</muleVersion>
-						<businessGroupId>${cloudhub.businessGroupId}</businessGroupId>
-						<artifact>${mule.artifact}</artifact>
+						<uri>https://anypoint.mulesoft.com</uri>
 						<connectedAppClientId>${cloudhub.connectedAppClientId}</connectedAppClientId>
 						<connectedAppClientSecret>${cloudhub.connectedAppClientSecret}</connectedAppClientSecret>
 						<connectedAppGrantType>${cloudhub.connectedAppGrantType}</connectedAppGrantType>
 						<applicationName>${anypoint.applicationName}</applicationName>
+						<objectStoreV2>true</objectStoreV2>
+						<muleVersion>${mule.version}</muleVersion>
 						<environment>${anypoint.mule.environment}</environment>
 						<region>${cloudhub.region}</region>
-						<uri>https://anypoint.mulesoft.com</uri>
 						<workerType>${cloudhub.workertype}</workerType>
 						<workers>${cloudhub.worker}</workers>
 						<properties>
+							<maven.compiler.target>1.8</maven.compiler.target>
+							<maven.compiler.source>1.8</maven.compiler.source>
 							<anypoint.platform.client_id>${cloudhub.env.clientid}</anypoint.platform.client_id>
 							<anypoint.platform.client_secret>${cloudhub.env.clientsecret}</anypoint.platform.client_secret>
-							<mule.key>${cloudhub.mule.key}</mule.key>
-							<mule.env>${cloudhub.env}</mule.env>
+							<mule.key>${mule.key}</mule.key>
+							<mule.env>${mule.env}</mule.env>
 							<anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
 						</properties>
 					</cloudHubDeployment>

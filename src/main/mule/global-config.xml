@@ -52,12 +52,12 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 		ignoreBasePath="true" /> -->
 
 	<http:listener-config name="http-listener-config">
-        <http:listener-connection host="${http.host}" port="${http.port}"/>
+        <http:listener-connection host="${https.host}" port="${https.port}" protocol="HTTPS" tlsContext="tls-prowess"/>
     </http:listener-config>
 
 	<tls:context name="tls-prowess" doc:name="TLS Context" doc:id="5dd20cd8-d02e-4879-af6b-5737ad42b3e6" >
 	
-	<tls:key-store type="jks" path="${tls.path}" alias="${tls.alias}" keyPassword="${tls.keypassword}" password="${tls.password}" />
+	<tls:key-store type="jks" path="${tls.path}" alias="${tls.alias}" keyPassword="${secure::tls.password}" password="${secure::tls.password}" />
 	
 	</tls:context>
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="8f643f5d-cb8a-4b58-908f-75dfcb5eec1e" >

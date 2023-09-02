@@ -17,7 +17,5 @@ database:
   
 tls:
   type: "JKS"
-  path: "Prowess-SSL-Keystore.jks"
-  alias: "*.esb.internal.prowess.com"
-  keypassword: test123
-  password: test123
+  path: "KeyStore.jks"
+  alias: "mulesoft"
