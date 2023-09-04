@@ -15,7 +15,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<app.runtime>4.4.0</app.runtime>
-		<mule.maven.plugin.version>3.8.0</mule.maven.plugin.version>
+		<mule.maven.plugin.version>3.8.2</mule.maven.plugin.version>
 		<munit.version>2.3.9</munit.version>
 		<tags/>
 		<categories>[]</categories>
@@ -105,11 +105,11 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
-            <groupId>781344dd-5c35-44e2-a7d5-54084ffee180</groupId>
-            <artifactId>mule-common-libraries</artifactId>
-            <version>1.0.1</version>
-            <classifier>mule-plugin</classifier>
-        </dependency>
+			<groupId>781344dd-5c35-44e2-a7d5-54084ffee180</groupId>
+			<artifactId>mule-common-libraries</artifactId>
+			<version>1.0.1</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
 		<dependency>
 			<groupId>com.mulesoft.modules</groupId>
 			<artifactId>mule-secure-configuration-property-module</artifactId>
@@ -132,6 +132,26 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.30</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.munit</groupId>
+			<artifactId>munit-runner</artifactId>
+			<version>2.3.13</version>
+			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.munit</groupId>
+			<artifactId>munit-tools</artifactId>
+			<version>2.3.13</version>
+			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.weave</groupId>
+			<artifactId>assertions</artifactId>
+			<version>1.0.2</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
