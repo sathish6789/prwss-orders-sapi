@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="prwss-orders-sapi-test-suite.xml" />
+	<munit:test name="prwss-orders-sapi-test-suite-prwss-orders-sapi-mainTest" doc:id="786e8f5e-17a3-4c09-9794-970bbeafa364" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="830d762e-6525-417e-affe-77320b38896e" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="prwss-orders-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to prwss-orders-sapi-main" doc:id="0ee8d64d-d6a8-4385-acc2-e9b9ef42d813" name="prwss-orders-sapi-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="7d07641d-d471-45b5-8c8f-5390212953f2" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="prwss-orders-sapi-test-suite-prwss-orders-sapi-consoleTest" doc:id="8376805c-56ba-44ca-a4a0-3335b719278c" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="019db7e6-c923-44bf-8e4a-dd9b2f474d6e" processor="apikit:console">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="prwss-orders-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to prwss-orders-sapi-console" doc:id="c2798767-d9e6-4ed1-892a-563baa3c95eb" name="prwss-orders-sapi-console"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="0b02a132-99bc-4345-b3b8-d3cd80f17bbe" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="prwss-orders-sapi-test-suite-get:\coi-info:prwss-orders-sapi-configTest" doc:id="e0ba4e43-2575-4881-a3a4-075e4098bf81" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="612fc0f0-678e-4ae0-96ad-e0882c2c075d" processor="db:select">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="92eba1d7-541c-4e7f-aad5-3bdfe77d3c0c" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="4f0795e3-ae12-4c1d-808f-6bea0ec67f8b" >
+				<munit:payload value="#[output application/json&#10;---&#10;readUrl('classpath://dbpayload.json','application/json')]" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to get:\coi-info:prwss-orders-sapi-config" doc:id="a67662be-53f7-49a9-86de-7a577428d5a7" name="get:\coi-info:prwss-orders-sapi-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="1931096f-d2d5-427f-93ab-15726d09a49c" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="prwss-orders-sapi-test-suite-post:\coi-upload:application\json:prwss-orders-sapi-configTest" doc:id="db94e134-eedc-410a-a2c2-72d410b1e6d9" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="0e8a4e9f-3c8a-455b-94f4-fc8bf3e79e4d" processor="db:insert">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="bf5422b6-1aa9-417c-9648-e9953357b6d7" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="ea4e042e-167f-475a-a84f-9e36bd0d35bd">
+				<munit:payload value="#[output application/json&#10;---&#10;readUrl('classpath://dbpayload.json','application/json')]" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\coi-upload:application\json:prwss-orders-sapi-config" doc:id="f6f94cd7-7b12-42e6-95a8-d1595cd7b0bb" name="post:\coi-upload:application\json:prwss-orders-sapi-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="d099a4b8-d2d5-4960-8ee0-105c7ae23ee7" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="prwss-orders-sapi-test-suite-post:\items-upload:application\json:prwss-orders-sapi-configTest" doc:id="ed748faf-cd6b-46b6-a3ae-ee8609cb4891" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="c2617069-b1ae-4352-9c45-91e4d8e5a92f" processor="db:bulk-insert">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="384eb2ee-81bb-43ce-a82d-0f9a850a127a" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="637af2f7-d101-4bf0-9819-f84a6ea00903">
+				<munit:payload value="#[output application/json&#10;---&#10;readUrl('classpath://dbpayload.json','application/json')]" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\items-upload:application\json:prwss-orders-sapi-config" doc:id="213e64f9-c2b2-41bf-8be7-bd50c742f68e" name="post:\items-upload:application\json:prwss-orders-sapi-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="e13f39e3-3815-47fe-a164-60d452575289" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="prwss-orders-sapi-test-suite-get:\health:prwss-orders-sapi-configTest" doc:id="f9aa94fa-db80-4bd2-829e-2d9d5a4e6675" description="Test">
+		<munit:behavior >
+			<flow-ref doc:name="Flow Reference" doc:id="221863ba-b5dd-4348-8410-7c71c4f72409" name="mile-log:failure-response-received"/>
+			<flow-ref doc:name="Flow Reference" doc:id="4694108b-095e-4578-a7e3-53e5ad3d679c" name="mile-log:filter-criteria-failed"/>
+			<flow-ref doc:name="Flow Reference" doc:id="1c8c02a1-db63-4983-8f9d-47f4dad3b1ca" name="mile-log:data-enrinchment-failure"/>
+			<flow-ref doc:name="Flow Reference" doc:id="63380756-4f0d-4f92-8329-ef4525ff3d85" name="mile-log:payload-logger"/>
+			<flow-ref doc:name="Flow Reference" doc:id="e13d9039-ff9e-400c-859b-3e146e015f06" name="mile-log:failure-response-sent"/>
+			<flow-ref doc:name="Flow Reference" doc:id="5a16d32f-5aea-4412-90f2-15bff949b858" name="milestone-log"/>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="d8a6455c-3d36-46d5-a2e0-e5370c518a65">
+				<munit:payload value="#[output application/json&#10;---&#10;readUrl('classpath://dbpayload.json','application/json')]" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to get:\health:prwss-orders-sapi-config" doc:id="bbf45697-ee06-4989-bb5a-718cffc193ac" name="get:\health:prwss-orders-sapi-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="e1f1a0f8-3d8a-433e-92a9-14a80823adca" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

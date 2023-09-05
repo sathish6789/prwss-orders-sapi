@@ -65,5 +65,4 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 	</db:config>
 <import doc:name="Import" doc:id="00d77e87-a228-4923-a012-ffa4ed764e62" file="mule-common-logging.xml" />
 <import doc:name="Import" doc:id="f9a22d05-bd82-497e-9559-81987d86e426" file="common-global.xml" />
-<import doc:name="Import" doc:id="ef2dc625-d3fe-4182-8df4-db7a60ea94f7" file="error-handler.xml" />
 </mule>

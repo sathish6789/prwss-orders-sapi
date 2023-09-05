@@ -1,0 +1,13 @@
+%dw 2.0
+
+type auto_d91f000f_380a_442e_ade5_4f9264e3da84_Output_Variables_inputPayload = {|
+  correlationId: String, 
+  businessProcessName: String | Null, 
+  flowName: String | Null, 
+  source: String, 
+  target: String, 
+  httpMethod: String, 
+  message: String, 
+  businessObject: Any
+|}
+

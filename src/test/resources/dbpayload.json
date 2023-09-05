@@ -1,0 +1,4 @@
+{
+	"query": "select CMail from prowess_customers where CID = :filterId;",
+	"values": 1
+}
