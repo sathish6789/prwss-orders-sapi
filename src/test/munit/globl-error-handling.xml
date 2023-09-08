@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="globl-error-handling.xml" />
+	<munit:test name="APIKIT:METHOD_NOT_ALLOWED" doc:id="8cbbf553-e0c1-4c26-b694-63f97d965084" expectedErrorType="APIKIT:METHOD_NOT_ALLOWED">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="c3e2cac3-c6a1-4628-b57f-2518622039ce" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="prwss-orders-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow Reference" doc:id="65dd498b-5c71-4967-bace-8572c0b12f38" name="prwss-orders-sapi-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="d9b228f5-6290-4eaa-8021-6656f73afd01" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="APIKIT:BAD_REQUEST" doc:id="0abde43f-b685-4c2f-871d-79d4b44960ae" expectedErrorType="APIKIT:BAD_REQUEST">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="0a3be561-28dd-48b6-8723-defed632ad86" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="prwss-orders-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:BAD_REQUEST" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow Reference" doc:id="67981bfc-035b-4f19-a0a4-797af78570a8" name="prwss-orders-sapi-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="f18222c8-f67c-40f2-9f31-504036510bf5" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="APIKIT:NOT_ACCEPTABLE" doc:id="292df17f-2e29-4245-8b73-3c192c60779e" expectedErrorType="APIKIT:NOT_ACCEPTABLE" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="d8a65e91-a975-4e6f-b146-c91fc0234a7d" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="prwss-orders-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_ACCEPTABLE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow Reference" doc:id="37dd4be0-5549-442a-aa8b-a4bc38cd7f52" name="prwss-orders-sapi-main" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="75c6a7e8-ee34-4c14-be55-cb7c4920bd94" expression="#[payload]" is="#[MunitTools::notNullValue()]" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="APIKIT:ANY" doc:id="f338dcaa-5c8c-4695-b7b0-077041f61854" expectedErrorType="APIKIT:ANY" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="f36703c2-bc5e-4d0b-b710-fa0bf1a48fd5" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="prwss-orders-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:ANY" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow Reference" doc:id="8e0b24e5-94cd-42be-8ab9-2dd76a8ef991" name="prwss-orders-sapi-main" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="60534429-ed71-4d56-9143-78cb923d2470" expression="#[payload]" is="#[MunitTools::notNullValue()]" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="APIKIT:NOT_IMPLEMENTED" doc:id="941f83d0-5a93-4920-8c28-ff3ff2bd28ac" expectedErrorType="APIKIT:NOT_IMPLEMENTED" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="f492bd97-bbe9-4108-960e-5e8d55cb242e" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="prwss-orders-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_IMPLEMENTED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow Reference" doc:id="1e5eb1dc-64a7-4ffe-9af4-5edd9dae4bef" name="prwss-orders-sapi-main" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="05a4a951-fe71-4c47-9440-2d703db01ba9" expression="#[payload]" is="#[MunitTools::notNullValue()]" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="APIKIT:UNSUPPORTED_MEDIA_TYPE" doc:id="0532809d-9746-4ebb-9aac-e669aadd8cbe" expectedErrorType="APIKIT:UNSUPPORTED_MEDIA_TYPE" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="ba69da76-bfe9-4bff-9e53-2344d8a456ca" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="prwss-orders-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:UNSUPPORTED_MEDIA_TYPE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow Reference" doc:id="77d9eac5-2b1f-46f6-8d3d-4b8e0a83648d" name="prwss-orders-sapi-main" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="b2495795-672f-467c-a9be-cfa811e4fdfe" expression="#[payload]" is="#[MunitTools::notNullValue()]" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="EXPRESSION" doc:id="1574c26e-12c0-4440-804a-9422e94da046" expectedErrorType="EXPRESSION" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="bc86e46d-f466-48ba-b2ef-1c8888a9e683" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="prwss-orders-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="EXPRESSION" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow Reference" doc:id="afb31804-c2a0-473c-a12d-c5daae3d3f62" name="prwss-orders-sapi-main" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="1d84f143-8008-418f-badc-836d09fc2696" expression="#[payload]" is="#[MunitTools::notNullValue()]" />
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

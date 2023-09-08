@@ -1,5 +1,5 @@
 api:
-  autodiscoveryId: "123456"  
+  id: "18949275"  
 
 http:
   host: "0.0.0.0"
@@ -8,6 +8,7 @@ http:
 https:
   host: "0.0.0.0"
   port: "8082"
+  path: "/api/*"
 
 database:
   host: "65.2.46.226"

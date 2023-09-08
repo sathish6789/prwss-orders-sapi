@@ -38,18 +38,10 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 		doc:id="8f0a30ee-8023-4aa2-91a3-c8ab1f805c27"
 		file="config/config-common.yaml" />
 
-	<global-property doc:name="default mule.env"
-		doc:id="fe3c60da-e4a7-4f63-b47b-6f30a7b8bc93" name="mule.env"
-		value="dev" />
-
-	<global-property doc:name="default mule.encryption.key"
-		doc:id="562465a7-8482-41fb-ad41-be913eca44c9"
-		name="mule.key" value="123456789mulesof" />
-
-<!-- 	<api-gateway:autodiscovery apiId="${api.id}"
+    <api-gateway:autodiscovery apiId="${api.id}"
 		doc:name="API Autodiscovery"
-		doc:id="99fac178-73f2-484b-8821-be13d2c2201a" flowRef="template-main"
-		ignoreBasePath="true" /> -->
+		doc:id="99fac178-73f2-484b-8821-be13d2c2201a" flowRef="prwss-orders-sapi-main"
+		ignoreBasePath="true" />
 
 	<http:listener-config name="http-listener-config">
         <http:listener-connection host="${https.host}" port="${https.port}" protocol="HTTPS" tlsContext="tls-prowess"/>
